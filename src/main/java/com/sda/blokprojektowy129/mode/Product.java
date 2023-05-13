@@ -10,14 +10,20 @@ public class Product {
     private long id;
     private String name;
     private double price;
+    private String fileName;
 
     //konstruktor dla Hibernate
     public Product() {
     }
 
-    public Product(String name, double price) {
+    public Product(String name, double price, String fileName) {
         this.name = name;
         this.price = price;
+        this.fileName = fileName;
+    }
+
+    public String getFileNameWithId() {
+        return id + "-"+fileName;
     }
 
     public String getName() {
@@ -27,6 +33,12 @@ public class Product {
     public double getPrice() {
         return price;
     }
+
+    public long getId() {
+        return id;
+    }
+
+
 
     @Override
     public String toString() {
