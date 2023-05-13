@@ -1,11 +1,14 @@
 package com.sda.blokprojektowy129.controller;
 
 import com.sda.blokprojektowy129.request.ProductRequest;
+import com.sda.blokprojektowy129.response.ProductResponse;
 import com.sda.blokprojektowy129.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 
 @Controller
@@ -37,6 +40,16 @@ private ProductService productService;
         productService.addProduct(productRequest);
         return "index.html";
     }
+
+    @GetMapping("/product/all")
+    public String getAllProductsPage(Model model) {
+        List<ProductResponse> products = productService.getProducts();
+        model.addAttribute("products", products); // wysyłam dane na template
+        return "all-products.html";
+    }
+
+
+
 
 
 }
