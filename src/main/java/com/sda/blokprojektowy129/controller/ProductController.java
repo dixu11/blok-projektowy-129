@@ -1,5 +1,6 @@
 package com.sda.blokprojektowy129.controller;
 
+import com.sda.blokprojektowy129.request.ProductRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +23,12 @@ public class ProductController {
         return "add-product.html"; //.html można pominąć
     }
 
+    //spring wyłapuje że dane mają identyfikatory: name + price
+    //może nam je podstawić do zmiennych name + price
+    //lub do obiektu który ma takie pola
+    // (private String name, private String price)
     @PostMapping("/product/add")
-    public String addProduct(String name, double price) {
-        System.out.println(name);
-        System.out.println(price);
-        System.out.println("dodaję produkt");
+    public String addProduct(ProductRequest productRequest) {
         return "index.html";
     }
 
