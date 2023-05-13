@@ -1,16 +1,21 @@
 package com.sda.blokprojektowy129.controller;
 
 import com.sda.blokprojektowy129.request.ProductRequest;
+import com.sda.blokprojektowy129.service.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
 
 @Controller
 public class ProductController {
 
+private ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping("/")
     public String getHomePage() {
@@ -29,6 +34,7 @@ public class ProductController {
     // (private String name, private String price)
     @PostMapping("/product/add")
     public String addProduct(ProductRequest productRequest) {
+        productService.addProduct(productRequest);
         return "index.html";
     }
 
