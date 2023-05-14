@@ -4,8 +4,6 @@ import com.sda.blokprojektowy129.mode.Product;
 import com.sda.blokprojektowy129.repository.ProductRepository;
 import com.sda.blokprojektowy129.request.ProductRequest;
 import com.sda.blokprojektowy129.response.ProductResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,18 +16,17 @@ import java.util.List;
 //@AllArgsConstructor - mogłoby zastąpić konstruktor
 public class ProductService {
 
+    //dla porządku wyniesione do pola statycznego
+    public static final String UPLOAD_LOCATION = System.getProperty("user.dir")  // daje lokalizacje projekty
+            + "\\upload" + File.separator;
     private ProductRepository productRepository;
-    @Autowired
-    private Environment environment;
 
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
     public void addProduct(ProductRequest request) {
-       //validacja
-
-
+        //validacja
         try {
             MultipartFile file = request.getFile();
 
@@ -42,11 +39,8 @@ public class ProductService {
             Product product = new Product(request.getName(), request.getPrice(), fileName);
             productRepository.save(product); // nadaje ID!
 
-
-            String userPath = System.getProperty("user.dir"); // daje lokalizacje projekty
-            File destinationFile = new File(userPath + "\\upload" + File.separator + product.getFileNameWithId());
+            File destinationFile = new File(UPLOAD_LOCATION + product.getFileNameWithId());
             file.transferTo(destinationFile);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,7 +48,8 @@ public class ProductService {
 
     public List<ProductResponse> getProducts() {
         return productRepository.findAll().stream()
-                .map(product -> new ProductResponse(product.getName(), product.getPrice()))
+                .map(product -> new ProductResponse(product.getName(), product.getPrice(),
+                         product.getFileNameWithId()))
                 .toList();
     }
 

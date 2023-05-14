@@ -48,8 +48,4 @@ private ProductService productService;
         return "all-products.html";
     }
 
-
-
-
-
 }

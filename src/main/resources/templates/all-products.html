@@ -9,6 +9,12 @@
 <div th:each="product:${products}">
     <div th:text="${product.name}"></div>
     <div th:text="${product.price}"></div>
+    <img th:src="@{'/images/' + ${product.fileName}}">
+<!--    @{} pozwala budować ścieżki-->
+<!--    ${} pozwala na dynamiczny dostęp do danych z modelu-->
+<!--    wcześniejsze rozwiązanie ze wskazaniem ścieżki na dysku nie działa bo szukałoby na dysku użytkownika-->
+<!--    możemy umieścić pliki w static - tam spring automatycznie hostuje ale TYLKO PRZY STARCIE SERWERA-->
+<!--    dlatego zrobiliśmy endpoint w klasie ImageController do którego zwracamy się tym url w src=-->
 </div>
 </body>
 </html>
